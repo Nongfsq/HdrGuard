@@ -1,9 +1,16 @@
 param(
-    [string]$InstallDir = "$env:LOCALAPPDATA\Programs\HdrGuard",
+    [string]$InstallDir = "",
     [switch]$RemoveUserData
 )
 
 $ErrorActionPreference = "Stop"
+
+$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+if ([string]::IsNullOrWhiteSpace($InstallDir)) {
+    $InstallDir = Split-Path -Parent $scriptDir
+}
+
+$InstallDir = [System.IO.Path]::GetFullPath($InstallDir)
 
 $running = Get-Process HdrGuard -ErrorAction SilentlyContinue
 if ($running) {
@@ -18,14 +25,23 @@ if (Test-Path $shortcutPath) {
 }
 
 if (Test-Path $InstallDir) {
-    Remove-Item -LiteralPath $InstallDir -Recurse -Force
-    Write-Host "Removed install directory: $InstallDir"
-}
+    if ($RemoveUserData) {
+        Remove-Item -LiteralPath $InstallDir -Recurse -Force
+        Write-Host "Removed install directory: $InstallDir"
+    } else {
+        $removed = 0
+        foreach ($relativePath in @("HdrGuard.exe", "config.example.json", "README.txt", "scripts")) {
+            $path = Join-Path $InstallDir $relativePath
+            if (Test-Path -LiteralPath $path) {
+                Remove-Item -LiteralPath $path -Recurse -Force
+                $removed++
+            }
+        }
 
-$userDataDir = Join-Path $env:APPDATA "HdrGuard"
-if ($RemoveUserData -and (Test-Path $userDataDir)) {
-    Remove-Item -LiteralPath $userDataDir -Recurse -Force
-    Write-Host "Removed user data directory: $userDataDir"
-} elseif (Test-Path $userDataDir) {
-    Write-Host "Kept user data directory: $userDataDir"
+        Write-Host "Removed application files from: $InstallDir"
+        $dataDir = Join-Path $InstallDir "data"
+        if (Test-Path -LiteralPath $dataDir) {
+            Write-Host "Kept runtime data directory: $dataDir"
+        }
+    }
 }

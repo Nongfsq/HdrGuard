@@ -53,7 +53,7 @@ Uninstall while keeping user config:
 
     powershell -ExecutionPolicy Bypass -File .\scripts\uninstall.ps1
 
-Runtime files are stored under %AppData%\HdrGuard.
+Runtime files are stored under .\data next to HdrGuard.exe.
 "@ | Set-Content -Path (Join-Path $packageDir "README.txt") -Encoding UTF8
 
 Compress-Archive -Path (Join-Path $packageDir "*") -DestinationPath $zipPath -Force

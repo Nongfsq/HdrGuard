@@ -40,10 +40,11 @@ From the extracted release folder:
 powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1 -Start
 ```
 
-The installer copies the release to:
+By default, the installer keeps the app in the extracted folder and creates a Startup
+shortcut. To install somewhere else:
 
-```text
-%LocalAppData%\Programs\HdrGuard
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1 -InstallDir C:\Tools\HdrGuard -Start
 ```
 
 It also creates this Startup shortcut:
@@ -58,7 +59,7 @@ To uninstall the app but keep your config/log/state files:
 powershell -ExecutionPolicy Bypass -File .\scripts\uninstall.ps1
 ```
 
-To also remove `%AppData%\HdrGuard`:
+To also remove the app-local `data` folder:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\uninstall.ps1 -RemoveUserData
@@ -81,10 +82,15 @@ recovery action.
 On first run, HdrGuard creates:
 
 ```text
-%AppData%\HdrGuard\config.json
-%AppData%\HdrGuard\state.json
-%AppData%\HdrGuard\HdrGuard.log
+.\data\config.json
+.\data\state.json
+.\data\HdrGuard.log
 ```
+
+The `data` folder is next to `HdrGuard.exe`, so a portable install keeps its runtime
+configuration with the software folder. If you upgrade from an older release, HdrGuard
+copies missing files from `%AppData%\HdrGuard` into `.\data` once and does not overwrite
+files that already exist in `.\data`.
 
 The default config is equivalent to `config.example.json`:
 

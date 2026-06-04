@@ -13,7 +13,7 @@ HdrGuard is local-only software.
 HdrGuard writes local runtime files under:
 
 ```text
-%AppData%\HdrGuard
+.\data
 ```
 
 Those files are:
@@ -21,6 +21,10 @@ Those files are:
 - `config.json` - user-editable settings.
 - `state.json` - displays HdrGuard changed and pending restore state.
 - `HdrGuard.log` - local diagnostics and HDR actions.
+
+The `data` folder is created next to `HdrGuard.exe`. Older releases used
+`%AppData%\HdrGuard`; current releases copy missing files from that legacy directory
+into `.\data` once and do not overwrite existing app-local files.
 
 ## What it does not do
 

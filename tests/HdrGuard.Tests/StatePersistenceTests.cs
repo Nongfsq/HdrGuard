@@ -127,4 +127,28 @@ public class StatePersistenceTests
         Assert.AreEqual(60, config.PrimaryRule.maxDisabledMinutes);
         Assert.AreEqual(userJson, File.ReadAllText(path), "valid existing config must not be rewritten");
     }
+
+    [TestMethod]
+    public void AppPaths_MigratesLegacyRuntimeFiles_WithoutOverwritingPortableData()
+    {
+        var legacyDir = Path.Combine(_dir, "legacy");
+        var runtimeDir = Path.Combine(_dir, "runtime");
+        Directory.CreateDirectory(legacyDir);
+        Directory.CreateDirectory(runtimeDir);
+
+        File.WriteAllText(Path.Combine(legacyDir, "config.json"), "legacy config");
+        File.WriteAllText(Path.Combine(legacyDir, "state.json"), "legacy state");
+        File.WriteAllText(Path.Combine(legacyDir, "HdrGuard.log"), "legacy log");
+        File.WriteAllText(Path.Combine(runtimeDir, "config.json"), "portable config");
+
+        var migrated = AppPaths.MigrateRuntimeFiles(legacyDir, runtimeDir);
+
+        CollectionAssert.AreEquivalent(
+            new[] { "state.json", "HdrGuard.log" },
+            migrated.ToArray(),
+            "only missing runtime files should be migrated");
+        Assert.AreEqual("portable config", File.ReadAllText(Path.Combine(runtimeDir, "config.json")));
+        Assert.AreEqual("legacy state", File.ReadAllText(Path.Combine(runtimeDir, "state.json")));
+        Assert.AreEqual("legacy log", File.ReadAllText(Path.Combine(runtimeDir, "HdrGuard.log")));
+    }
 }

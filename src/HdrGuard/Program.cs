@@ -5,11 +5,17 @@ static class Program
     [STAThread]
     static void Main(string[] args)
     {
-        ApplicationConfiguration.Initialize();
-        AppLog.Initialize(AppPaths.LogPath);
-
         try
         {
+            ApplicationConfiguration.Initialize();
+            Directory.CreateDirectory(AppPaths.RuntimeDirectory);
+            var migratedFiles = AppPaths.MigrateLegacyRuntimeFiles();
+            AppLog.Initialize(AppPaths.LogPath);
+            if (migratedFiles.Count > 0)
+            {
+                AppLog.Write($"Migrated legacy runtime file(s) from {AppPaths.LegacyAppDataDirectory}: {string.Join(", ", migratedFiles)}.");
+            }
+
             if (TryRunCommand(args))
             {
                 return;
