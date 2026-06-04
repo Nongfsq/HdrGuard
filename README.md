@@ -162,6 +162,11 @@ HdrGuard reads local RustDesk logs only to infer session connect/disconnect stat
 does not send telemetry, upload logs, or contact a service. See `PRIVACY.md` before
 sharing logs in issues.
 
+## Contributing
+
+Read `CONTRIBUTING.md` before sending changes. This public repository has strict
+rules for avoiding personal configs, logs, machine paths, and private working notes.
+
 ## License
 
 Apache-2.0. See `LICENSE` and `NOTICE`.
