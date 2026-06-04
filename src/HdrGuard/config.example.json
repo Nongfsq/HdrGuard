@@ -1,0 +1,26 @@
+{
+  "startEnabled": true,
+  "rustDesk": {
+    "pollSeconds": 2,
+    "startupScanLines": 200,
+    "enableNetworkFallback": false,
+    "logPaths": [
+      "%AppData%\\RustDesk\\log\\cm\\RustDesk_rCURRENT.log",
+      "%ProgramData%\\RustDesk\\log\\cm\\RustDesk_rCURRENT.log"
+    ],
+    "connectPatterns": [
+      "Got new connection"
+    ],
+    "disconnectPatterns": [
+      "cm ipc connection (closed|disconnect)"
+    ]
+  },
+  "rules": [
+    {
+      "process": "rustdesk.exe",
+      "disableHdrWhenActive": true,
+      "restoreAfterMinutes": 5,
+      "maxDisabledMinutes": 60
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">HdrGuard icon</title>
+  <desc id="desc">Remote screen, self-host server rack, and red connection bridge on a dark rounded square.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1A1C23" />
+      <stop offset="100%" stop-color="#090A0F" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <rect width="512" height="512" fill="url(#bg)" rx="128" />
+
+  <g filter="url(#shadow)">
+    <rect x="112" y="112" width="208" height="144" fill="none" stroke="#FFFFFF" stroke-width="40" rx="24" />
+    <circle cx="368" cy="144" r="56" fill="#F03030" />
+    <rect x="224" y="272" width="176" height="128" fill="#FFFFFF" rx="24" />
+    <rect x="264" y="312" width="96" height="16" fill="#090A0F" rx="8" />
+    <circle cx="272" cy="360" r="8" fill="#F03030" />
+    <circle cx="304" cy="360" r="8" fill="#090A0F" />
+    <path d="M 216 256 L 216 336 L 256 336" fill="none" stroke="#F03030" stroke-width="40" stroke-linejoin="round" stroke-linecap="round" />
+  </g>
+</svg>

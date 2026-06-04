@@ -1,0 +1,20 @@
+bin/
+obj/
+TestResults/
+.vs/
+.vscode/
+*.user
+*.suo
+*.log
+*.tmp
+
+# Local runtime state. These files are user-specific and must not be committed.
+config.json
+state.json
+HdrGuard.log
+
+# Release packaging output.
+artifacts/
+release/
+*.zip
+*.sha256
